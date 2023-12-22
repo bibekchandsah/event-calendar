@@ -477,6 +477,42 @@ function convertTime(time) {
 
 
 
+// auto focus on input field and works on enter button
+document.addEventListener('DOMContentLoaded', function () {
+    const eventNameInput = document.querySelector('.event-name');
+    const eventTimeFromInput = document.querySelector('.event-time-from');
+    const eventTimeToInput = document.querySelector('.event-time-to');
+    const addEventBtn = document.querySelector('.add-event-btn');
+    const focusEventNameBtn = document.querySelector('.add-event');
+
+    focusEventNameBtn.addEventListener('click', function () {
+      eventNameInput.focus();
+    });
+
+    eventNameInput.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        eventTimeFromInput.focus();
+      }
+    });
+
+    eventTimeFromInput.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        eventTimeToInput.focus();
+      }
+    });
+
+    eventTimeToInput.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        addEventBtn.click();
+      }
+    });
+
+    addEventBtn.addEventListener('click', function () {
+      // Add your logic for handling the "Add Event" button click
+    //   alert('Event added!');
+    });
+  });
+
 
 
 
