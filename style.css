@@ -308,7 +308,11 @@
     padding: 0 20px;
     padding-left: 50px;
     color: #fff;
-    background: linear-gradient(90deg, #3f4458, transparent);
+    /* background: linear-gradient(90deg, #3f4458, transparent); */
+    /* background: linear-gradient(90deg, #aebaf8, transparent); */
+    /* background: linear-gradient(90deg, #e5aac3, transparent); */
+    /* background: linear-gradient(90deg, #9fa5d5, transparent); */
+    background: linear-gradient(90deg, #ead6ee, transparent);
     cursor: pointer;
   }
   /* even event */
