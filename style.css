@@ -39,7 +39,8 @@
     padding: 5px;
     color: #fff;
     display: flex;
-    border-radius: 10px;
+    /* border-radius: 10px; */
+    border-radius: 25px;
     /* background-color: #373c4f; */
     background: linear-gradient(to right, #9796f0, #fbc7d4);
   }
@@ -56,7 +57,8 @@
     flex-wrap: wrap;
     justify-content: space-between;
     color: #878895;
-    border-radius: 5px;
+    /* border-radius: 5px; */
+    border-radius: 25px;
     background-color: #fff;
   }
   /* set after behind the main element */
@@ -67,13 +69,16 @@
     top: 50%;
     left: 100%;
     width: 12px;
-    height: 97%;
-    border-radius: 0 5px 5px 0;
+    /* height: 97%; */
+    height: 96%;
+    /* border-radius: 0 5px 5px 0; */
+    border-radius: 0 25px 25px 0;
     background-color: #d3d4d6d7;
     transform: translateY(-50%);
   }
   .calendar::before {
-    height: 94%;
+    /* height: 94%; */
+    height: 93%;
     left: calc(100% + 12px);
     background-color: rgb(153, 153, 153);
   }
@@ -524,14 +529,19 @@
     .calendar::after {
       top: 100%;
       left: 50%;
-      width: 97%;
-      height: 12px;
-      border-radius: 0 0 5px 5px;
+      /* width: 97%; */
+      width: 94%;
+      /* height: 12px; */
+      height: 16px;
+      /* border-radius: 0 0 5px 5px; */
+      border-radius: 0 0 25px 25px;
       transform: translateX(-50%);
     }
     .calendar::before {
-      width: 94%;
-      top: calc(100% + 12px);
+      /* width: 94%; */
+      width: 90%;
+      /* top: calc(100% + 12px); */
+      top: calc(100% + 14px);
     }
     .events {
       padding-bottom: 340px;
