@@ -199,9 +199,9 @@
   .calendar .days .event::after {
     content: "";
     position: absolute;
-    bottom: 10%;
+    bottom: 15%;
     left: 50%;
-    width: 75%;
+    width: 60%;
     height: 6px;
     border-radius: 30px;
     transform: translateX(-50%);
