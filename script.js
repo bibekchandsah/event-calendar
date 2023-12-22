@@ -515,6 +515,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+  // press enter to jump on certain date
+  document.addEventListener('DOMContentLoaded', function () {
+    const dateInput = document.querySelector('.date-input');
+    const gotoBtn = document.querySelector('.goto-btn');
+
+    dateInput.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        gotoBtn.click();
+      }
+    });
+
+    gotoBtn.addEventListener('click', function () {
+      // Add your logic for handling the "Go to Date" button click
+    //   alert('Navigating to the specified date!');
+    });
+  });
 
 
 
