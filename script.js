@@ -535,6 +535,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const dateInput = document.querySelector('.date-input');
     const gotoBtn = document.querySelector('.goto-btn');
 
+    // today value in date field
+    dateInput.value = (new Date()).getMonth() + 1 + "/" + (new Date()).getFullYear();
+
     dateInput.addEventListener('keydown', function (event) {
       if (event.key === 'Enter') {
         gotoBtn.click();
