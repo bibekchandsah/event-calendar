@@ -116,6 +116,21 @@ function initCalendar() {
     }
     daysContainer.innerHTML = days;
     addListner();
+
+
+    let monthh = document.querySelector(".date").textContent.slice(0, document.querySelector(".date").textContent.lastIndexOf(" "))
+    let yearr = document.querySelector(".date").textContent.slice(document.querySelector(".date").textContent.lastIndexOf(" ") + 1);
+
+    let fate = JSON.parse(localStorage.getItem("markedDates"));
+    [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
+        fate && fate.forEach(item => {
+            if (item.day == elem.textContent && item.month == monthh && item.year == yearr) {
+                elem.classList.add("marked")
+            }
+        })
+    })
+
+    
 }
 
 //function to add month and year on prev and next button
@@ -588,13 +603,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Retrieve stored dates array from localStorage
     const storedDates = JSON.parse(localStorage.getItem('markedDates')) || [];
 
+    
     // Mark the dates if they were stored
-    storedDates.forEach(date => {
-        const markedElement = findDateElementByValue(calendarDays, date);
-        if (markedElement) {
-            markedElement.classList.add('marked');
+    let fate = JSON.parse(localStorage.getItem("markedDates"));
+    [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
+        if (fate && fate.includes(elem.textContent)) {
+            elem.classList.add("marked")
         }
-    });
+    })
 
     calendarDays.addEventListener('click', function (event) {
         const clickedDate = event.target.textContent;
