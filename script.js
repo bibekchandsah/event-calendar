@@ -116,6 +116,18 @@ function initCalendar() {
     }
     daysContainer.innerHTML = days;
     addListner();
+
+    let monthh = document.querySelector(".date").textContent.slice(0, document.querySelector(".date").textContent.lastIndexOf(" "))
+    let yearr = document.querySelector(".date").textContent.slice(document.querySelector(".date").textContent.lastIndexOf(" ") + 1);
+
+    let fate = JSON.parse(localStorage.getItem("markedDates"));
+    [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
+        fate.forEach(item => {
+            if (item.day == elem.textContent && item.month == monthh && item.year == yearr) {
+                elem.classList.add("marked")
+            }
+        })
+    })
 }
 
 //function to add month and year on prev and next button
@@ -486,51 +498,51 @@ document.addEventListener('DOMContentLoaded', function () {
     const focusEventNameBtn = document.querySelector('.add-event');
 
     focusEventNameBtn.addEventListener('click', function () {
-      eventNameInput.focus();
+        eventNameInput.focus();
     });
 
     eventNameInput.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') {
-        eventTimeFromInput.focus();
-      }
+        if (event.key === 'Enter') {
+            eventTimeFromInput.focus();
+        }
     });
 
     eventTimeFromInput.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') {
-        eventTimeToInput.focus();
-      }
+        if (event.key === 'Enter') {
+            eventTimeToInput.focus();
+        }
     });
 
     eventTimeToInput.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') {
-        addEventBtn.click();
-      }
+        if (event.key === 'Enter') {
+            addEventBtn.click();
+        }
     });
 
     addEventBtn.addEventListener('click', function () {
-      // Add your logic for handling the "Add Event" button click
-    //   alert('Event added!');
+        // Add your logic for handling the "Add Event" button click
+        //   alert('Event added!');
     });
-  });
+});
 
 
 
-  // press enter to jump on certain date
-  document.addEventListener('DOMContentLoaded', function () {
+// press enter to jump on certain date
+document.addEventListener('DOMContentLoaded', function () {
     const dateInput = document.querySelector('.date-input');
     const gotoBtn = document.querySelector('.goto-btn');
 
     dateInput.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') {
-        gotoBtn.click();
-      }
+        if (event.key === 'Enter') {
+            gotoBtn.click();
+        }
     });
 
     gotoBtn.addEventListener('click', function () {
-      // Add your logic for handling the "Go to Date" button click
-    //   alert('Navigating to the specified date!');
+        // Add your logic for handling the "Go to Date" button click
+        //   alert('Navigating to the specified date!');
     });
-  });
+});
 
 
 
@@ -589,22 +601,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const storedDates = JSON.parse(localStorage.getItem('markedDates')) || [];
 
     // Mark the dates if they were stored
-    storedDates.forEach(date => {
-        const markedElement = findDateElementByValue(calendarDays, date);
-        if (markedElement) {
-            markedElement.classList.add('marked');
+    let fate = JSON.parse(localStorage.getItem("markedDates"));
+    [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
+        if (fate && fate.includes(elem.textContent)) {
+            elem.classList.add("marked")
         }
-    });
+    })
+
 
     calendarDays.addEventListener('click', function (event) {
-        const clickedDate = event.target.textContent;
+        const clickedDate = {
+            year: document.querySelector(".date").textContent.slice(document.querySelector(".date").textContent.lastIndexOf(" ") + 1),
+            day: event.target.textContent,
+            month: document.querySelector(".date").textContent.slice(0, document.querySelector(".date").textContent.lastIndexOf(" "))
+        };
 
-        if (!isNaN(clickedDate)) {
-            toggleDateMarking(event.target);
+        //if (!isNaN(clickedDate)) {
+        toggleDateMarking(event.target);
 
-            // Update the array of marked dates and store in localStorage
-            updateMarkedDates(clickedDate);
-        }
+        // Update the array of marked dates and store in localStorage
+        updateMarkedDates(clickedDate);
+        //}
     });
 });
 
