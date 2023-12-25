@@ -133,7 +133,8 @@ function initCalendar() {
 
     [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
         events && events.forEach(item => {
-            if (item.day == elem.textContent && item.month == monthh && item.year == yearr) {
+            console.log(item.day, elem.textContent, item.month, monthh, item.year, yearr)
+            if (item.day == elem.textContent && item.month == months.indexOf(monthh) + 1 && item.year == yearr) {
                 elem.classList.add("event")
             }
         })
@@ -265,9 +266,9 @@ function updateEvents(date) {
     let events = "";
     eventsArr.forEach((event) => {
         if (
-            date === event.day &&
-            month + 1 === event.month &&
-            year === event.year
+            date == event.day &&
+            month + 1 == event.month &&
+            year == event.year
         ) {
             event.events.forEach((event) => {
                 events += `<div class="event">
@@ -449,17 +450,17 @@ eventsContainer.addEventListener("click", (e) => {
             const eventTitle = e.target.children[0].children[1].innerHTML;
             eventsArr.forEach((event) => {
                 if (
-                    event.day === activeDay &&
-                    event.month === month + 1 &&
-                    event.year === year
+                    event.day == activeDay &&
+                    event.month == month + 1 &&
+                    event.year == year
                 ) {
                     event.events.forEach((item, index) => {
-                        if (item.title === eventTitle) {
+                        if (item.title == eventTitle) {
                             event.events.splice(index, 1);
                         }
                     });
                     //if no events left in a day then remove that day from eventsArr
-                    if (event.events.length === 0) {
+                    if (event.events.length == 0) {
                         eventsArr.splice(eventsArr.indexOf(event), 1);
                         //remove event class from day
                         const activeDayEl = document.querySelector(".day.active");
