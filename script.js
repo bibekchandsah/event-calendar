@@ -122,7 +122,7 @@ function initCalendar() {
 
     let fate = JSON.parse(localStorage.getItem("markedDates"));
     [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
-        fate.forEach(item => {
+        fate && fate.forEach(item => {
             if (item.day == elem.textContent && item.month == monthh && item.year == yearr) {
                 elem.classList.add("marked")
             }
