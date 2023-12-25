@@ -17,11 +17,14 @@ const calendar = document.querySelector(".calendar"),
     addEventTo = document.querySelector(".event-time-to "),
     addEventSubmit = document.querySelector(".add-event-btn ");
 
+// current day month year
 let today = new Date();
 let activeDay;
 let month = today.getMonth();
 let year = today.getFullYear();
 
+
+// list of month name
 const months = [
     "January",
     "February",
@@ -55,9 +58,11 @@ const months = [
 //   },
 // ];
 
+
 const eventsArr = [];
 getEvents();
 console.log(eventsArr);
+
 
 //function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
 function initCalendar() {
@@ -68,15 +73,11 @@ function initCalendar() {
     const lastDate = lastDay.getDate();
     const day = firstDay.getDay();
     const nextDays = 7 - lastDay.getDay() - 1;
-
     date.innerHTML = months[month] + " " + year;
-
     let days = "";
-
     for (let x = day; x > 0; x--) {
         days += `<div class="day prev-date">${prevDays - x + 1}</div>`;
     }
-
     for (let i = 1; i <= lastDate; i++) {
         //check if event is present on that day
         let event = false;
@@ -110,16 +111,13 @@ function initCalendar() {
             }
         }
     }
-
     for (let j = 1; j <= nextDays; j++) {
         days += `<div class="day next-date">${j}</div>`;
     }
     daysContainer.innerHTML = days;
     addListner();
-
     let monthh = document.querySelector(".date").textContent.slice(0, document.querySelector(".date").textContent.lastIndexOf(" "))
     let yearr = document.querySelector(".date").textContent.slice(document.querySelector(".date").textContent.lastIndexOf(" ") + 1);
-
     let fate = JSON.parse(localStorage.getItem("markedEventDates"));
     [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
         fate && fate.forEach(item => {
@@ -128,17 +126,17 @@ function initCalendar() {
             }
         })
     })
-
     let events = JSON.parse(localStorage.getItem("events"));
-
     [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
         events && events.forEach(item => {
-            if (item.day == elem.textContent && item.month == monthh && item.year == yearr) {
+            console.log(item.day, elem.textContent, item.month, monthh, item.year, yearr)
+            if (item.day == elem.textContent && item.month == months.indexOf(monthh) + 1 && item.year == yearr) {
                 elem.classList.add("event")
             }
         })
     })
 }
+
 
 //function to add month and year on prev and next button
 function prevMonth() {
@@ -149,7 +147,6 @@ function prevMonth() {
     }
     initCalendar();
 }
-
 function nextMonth() {
     month++;
     if (month > 11) {
@@ -159,10 +156,31 @@ function nextMonth() {
     initCalendar();
 }
 
-prev.addEventListener("click", prevMonth);
-next.addEventListener("click", nextMonth);
-
+// prev.addEventListener("click", prevMonth);
+// next.addEventListener("click", nextMonth);
+prev.addEventListener('click', function () {
+    prevMonth();
+});
+next.addEventListener('click', function () {
+    nextMonth();
+});
 initCalendar();
+
+
+// arrow key to goto next or previous month
+document.addEventListener('keydown', function (event) {
+    // Check if any input field is focused
+    const isInputFocused = document.activeElement.tagName.toLowerCase() === 'input';
+
+    if (!isInputFocused) {
+        if (event.key === 'ArrowRight') {
+            next.click();
+        } else if (event.key === 'ArrowLeft') {
+            prev.click();
+        }
+    }
+});
+
 
 //function to add active on day
 function addListner() {
@@ -213,6 +231,7 @@ function addListner() {
     });
 }
 
+// goto today month and shows todays date
 todayBtn.addEventListener("click", () => {
     today = new Date();
     month = today.getMonth();
@@ -220,6 +239,8 @@ todayBtn.addEventListener("click", () => {
     initCalendar();
 });
 
+
+// input the valid date
 dateInput.addEventListener("input", (e) => {
     dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
     if (dateInput.value.length === 2) {
@@ -235,8 +256,9 @@ dateInput.addEventListener("input", (e) => {
     }
 });
 
-gotoBtn.addEventListener("click", gotoDate);
 
+// goto specific date
+gotoBtn.addEventListener("click", gotoDate);
 function gotoDate() {
     console.log("here");
     const dateArr = dateInput.value.split("/");
@@ -251,6 +273,7 @@ function gotoDate() {
     alert("Invalid Date");
 }
 
+
 //function get active day day name and date and update eventday eventdate
 function getActiveDay(date) {
     const day = new Date(year, month, date);
@@ -259,14 +282,15 @@ function getActiveDay(date) {
     eventDate.innerHTML = date + " " + months[month] + " " + year;
 }
 
+
 //function update events when a day is active
 function updateEvents(date) {
     let events = "";
     eventsArr.forEach((event) => {
         if (
-            date === event.day &&
-            month + 1 === event.month &&
-            year === event.year
+            date == event.day &&
+            month + 1 == event.month &&
+            year == event.year
         ) {
             event.events.forEach((event) => {
                 events += `<div class="event">
@@ -290,26 +314,28 @@ function updateEvents(date) {
     saveEvents();
 }
 
+
 //function to add event
 addEventBtn.addEventListener("click", () => {
     addEventWrapper.classList.toggle("active");
 });
-
 addEventCloseBtn.addEventListener("click", () => {
     addEventWrapper.classList.remove("active");
 });
-
 document.addEventListener("click", (e) => {
     if (e.target !== addEventBtn && !addEventWrapper.contains(e.target)) {
         addEventWrapper.classList.remove("active");
     }
 });
 
+
 //allow 50 chars in eventtitle
 addEventTitle.addEventListener("input", (e) => {
     addEventTitle.value = addEventTitle.value.slice(0, 60);
 });
 
+
+// shows the credit in bottom of calendar
 function defineProperty() {
     var osccred = document.createElement("div");
     //   osccred.innerHTML =
@@ -327,8 +353,8 @@ function defineProperty() {
     osccred.style.boxShadow = "0 0 5px #ccc";
     document.body.appendChild(osccred);
 }
-
 defineProperty();
+
 
 // allow only time in eventtime from and to
 addEventFrom.addEventListener("input", (e) => {
@@ -340,7 +366,6 @@ addEventFrom.addEventListener("input", (e) => {
         addEventFrom.value = addEventFrom.value.slice(0, 5);
     }
 });
-
 addEventTo.addEventListener("input", (e) => {
     addEventTo.value = addEventTo.value.replace(/[^0-9:]/g, "");
     if (addEventTo.value.length === 2) {
@@ -351,6 +376,7 @@ addEventTo.addEventListener("input", (e) => {
     }
 });
 
+
 //function to add event to eventsArr
 addEventSubmit.addEventListener("click", () => {
     const eventTitle = addEventTitle.value;
@@ -360,7 +386,6 @@ addEventSubmit.addEventListener("click", () => {
     //     alert("Please fill all the fields");
     //     return;
     // }
-
     //check correct time format 24 hour
     const timeFromArr = eventTimeFrom.split(":");
     const timeToArr = eventTimeTo.split(":");
@@ -375,10 +400,8 @@ addEventSubmit.addEventListener("click", () => {
     //     alert("Invalid Time Format");
     //     return;
     // }
-
     const timeFrom = convertTime(eventTimeFrom);
     const timeTo = convertTime(eventTimeTo);
-
     //check if event is already added
     let eventExist = false;
     eventsArr.forEach((event) => {
@@ -417,7 +440,6 @@ addEventSubmit.addEventListener("click", () => {
             }
         });
     }
-
     if (!eventAdded) {
         eventsArr.push({
             day: activeDay,
@@ -426,7 +448,6 @@ addEventSubmit.addEventListener("click", () => {
             events: [newEvent],
         });
     }
-
     console.log(eventsArr);
     addEventWrapper.classList.remove("active");
     addEventTitle.value = "";
@@ -440,6 +461,7 @@ addEventSubmit.addEventListener("click", () => {
     }
 });
 
+
 //function to delete event when clicked on event
 eventsContainer.addEventListener("click", (e) => {
     if (e.target.classList.contains("event")) {
@@ -447,17 +469,17 @@ eventsContainer.addEventListener("click", (e) => {
             const eventTitle = e.target.children[0].children[1].innerHTML;
             eventsArr.forEach((event) => {
                 if (
-                    event.day === activeDay &&
-                    event.month === month + 1 &&
-                    event.year === year
+                    event.day == activeDay &&
+                    event.month == month + 1 &&
+                    event.year == year
                 ) {
                     event.events.forEach((item, index) => {
-                        if (item.title === eventTitle) {
+                        if (item.title == eventTitle) {
                             event.events.splice(index, 1);
                         }
                     });
                     //if no events left in a day then remove that day from eventsArr
-                    if (event.events.length === 0) {
+                    if (event.events.length == 0) {
                         eventsArr.splice(eventsArr.indexOf(event), 1);
                         //remove event class from day
                         const activeDayEl = document.querySelector(".day.active");
@@ -472,11 +494,11 @@ eventsContainer.addEventListener("click", (e) => {
     }
 });
 
+
 //function to save events in local storage
 function saveEvents() {
     localStorage.setItem("events", JSON.stringify(eventsArr));
 }
-
 //function to get events from local storage
 function getEvents() {
     //check if events are already saved in local storage then return event else nothing
@@ -485,9 +507,8 @@ function getEvents() {
     }
     eventsArr.push(...JSON.parse(localStorage.getItem("events")));
 }
-
+//convert time to 24 hour format
 function convertTime(time) {
-    //convert time to 24 hour format
     let timeArr = time.split(":");
     let timeHour = timeArr[0];
     let timeMin = timeArr[1];
@@ -496,7 +517,6 @@ function convertTime(time) {
     time = timeHour + ":" + timeMin + " " + timeFormat;
     return time;
 }
-
 
 
 // auto focus on input field and works on enter button
@@ -510,46 +530,37 @@ document.addEventListener('DOMContentLoaded', function () {
     focusEventNameBtn.addEventListener('click', function () {
         eventNameInput.focus();
     });
-
     eventNameInput.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             eventTimeFromInput.focus();
         }
     });
-
     eventTimeFromInput.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             eventTimeToInput.focus();
         }
     });
-
     eventTimeToInput.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             addEventBtn.click();
         }
     });
-
     addEventBtn.addEventListener('click', function () {
         // Add your logic for handling the "Add Event" button click
         //   alert('Event added!');
     });
 });
-
-
-
 // press enter to jump on certain date
 document.addEventListener('DOMContentLoaded', function () {
     const dateInput = document.querySelector('.date-input');
     const gotoBtn = document.querySelector('.goto-btn');
-
-    dateInput.value = (new Date()).getMonth() + 1 + "/" + (new Date()).getFullYear();
-
+    // display current date value on date input
+    // dateInput.value = (new Date()).getMonth() + 1 + "/" + (new Date()).getFullYear();
     dateInput.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             gotoBtn.click();
         }
     });
-
     gotoBtn.addEventListener('click', function () {
         // Add your logic for handling the "Go to Date" button click
         //   alert('Navigating to the specified date!');
@@ -557,50 +568,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-// // Retrieve marked dates from local storage
-// const storedDates = JSON.parse(localStorage.getItem('markedDates')) || [];
-
-// // Mark dates based on local storage
-// storedDates.forEach(date => {
-//     const dayElement = document.querySelector(`.day[data-date="${date}"]`);
-//     if (dayElement) {
-//         dayElement.classList.add('marked');
-//     }
-// });
-
-// // Add click event listener to toggle marking
-// document.querySelectorAll('.day').forEach(day => {
-//     day.addEventListener('click', function () {
-//         const date = this.getAttribute('data-date');
-//         const markedDates = JSON.parse(localStorage.getItem('markedDates')) || [];
-
-//         if (this.classList.contains('marked')) {
-//             // Date is already marked, so remove it
-//             this.classList.remove('marked');
-//             const index = markedDates.indexOf(date);
-//             if (index !== -1) {
-//                 markedDates.splice(index, 1);
-//             }
-//         } else {
-//             // Date is not marked, so mark it
-//             this.classList.add('marked');
-//             markedDates.push(date);
-//         }
-
-//         // Save marked dates to local storage
-//         localStorage.setItem('markedDates', JSON.stringify(markedDates));
-//     });
-// });
-
-
-
+// sore the marked date in local storage
 document.addEventListener('DOMContentLoaded', function () {
     const calendarDays = document.querySelector('.days');
-
     // Retrieve stored dates array from localStorage
     const storedDates = JSON.parse(localStorage.getItem('markedEventDates')) || [];
-
     // Mark the dates if they were stored
     let fate = JSON.parse(localStorage.getItem("markedEventDates"));
     [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
@@ -608,36 +580,49 @@ document.addEventListener('DOMContentLoaded', function () {
             elem.classList.add("marked")
         }
     })
-
-
     calendarDays.addEventListener('click', function (event) {
         const clickedDate = {
             year: document.querySelector(".date").textContent.slice(document.querySelector(".date").textContent.lastIndexOf(" ") + 1),
             day: event.target.textContent,
             month: document.querySelector(".date").textContent.slice(0, document.querySelector(".date").textContent.lastIndexOf(" "))
         };
-
         //if (!isNaN(clickedDate)) {
         toggleDateMarking(event.target);
-
         // Update the array of marked dates and store in localStorage
-        updateMarkedDates(clickedDate);
+        updateMarkedDates(clickedDate, event.target);
         //}
     });
 });
 
+
+// Toggle the marking class
 function toggleDateMarking(element) {
-    // Toggle the marking class
     element.classList.toggle('marked');
+    let monthh = document.querySelector(".date").textContent.slice(0, document.querySelector(".date").textContent.lastIndexOf(" "))
+    let yearr = document.querySelector(".date").textContent.slice(document.querySelector(".date").textContent.lastIndexOf(" ") + 1);
+    if (!element.classList.contains('marked')) {
+        let fate = JSON.parse(localStorage.getItem("markedEventDates"));
+
+        fate && fate.forEach((item, index) => {
+            if (item.day == element.textContent && item.month == monthh && item.year == yearr) {
+                fate[index] = { year: "", day: "", month: "" }
+
+                localStorage.setItem("markedEventDates", JSON.stringify(fate));
+            }
+        })
+    }
 }
 
-function updateMarkedDates(clickedDate) {
+
+// Add a date to the list of marked dates or remove it
+// update the marked date on local storage
+function updateMarkedDates(clickedDate, elem) {
+    if (!elem.classList.contains("marked"))
+        return;
     // Retrieve stored dates array from localStorage
     const storedDates = JSON.parse(localStorage.getItem('markedEventDates')) || [];
-
     // Check if the date is already in the array
     const index = storedDates.indexOf(clickedDate);
-
     if (index !== -1) {
         // If date is already in the array, remove it
         storedDates.splice(index, 1);
@@ -645,11 +630,11 @@ function updateMarkedDates(clickedDate) {
         // If date is not in the array, add it
         storedDates.push(clickedDate);
     }
-
     // Store the updated array of marked dates in localStorage
     localStorage.setItem('markedEventDates', JSON.stringify(storedDates));
 }
 
+// get the selected date
 function findDateElementByValue(calendarDays, value) {
     // Find and return the element with the specified value
     const dateElements = calendarDays.querySelectorAll('.day');
