@@ -47,6 +47,18 @@
   .left {
     width: 60%;
     padding: 20px;
+    animation: to-top 1s forwards;
+  }
+  @keyframes to-top {
+    0% {
+      transform: translateX(-10%);
+      opacity: 0;
+    }
+  
+    100% {
+      transform: translateX(0%);
+      opacity: 1;
+    }
   }
   .calendar {
     position: relative;
@@ -519,6 +531,18 @@
       height: 100%;
       /* padding: 20px 0; */
       padding: 20px 15px;
+      animation: to-top 1s forwards;
+    }
+    @keyframes to-top {
+      0% {
+        transform: translateY(-10%);
+        opacity: 0;
+      }
+    
+      100% {
+        transform: translateY(0%);
+        opacity: 1;
+      }
     }
     .container .right {
       width: 100%;
