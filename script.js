@@ -181,7 +181,7 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-
+const leftElement = document.querySelector('.left');
 // Initialize Hammer.js for swipe gestures on the left element
     const hammerLeft = new Hammer(leftElement);
 
