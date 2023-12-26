@@ -182,6 +182,19 @@ document.addEventListener('keydown', function (event) {
 });
 
 
+// Initialize Hammer.js for swipe gestures
+    const hammer = new Hammer(document.body); 
+
+// Handle swipe left and right gestures
+    hammer.on('swipeleft swiperight', function (event) {
+        if (event.type === 'swiperight') {
+            prev.click();
+        } else if (event.type === 'swipeleft') {
+            next.click();
+        }
+    });
+
+
 //function to add active on day
 function addListner() {
     const days = document.querySelectorAll(".day");
