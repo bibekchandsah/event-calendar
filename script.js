@@ -354,7 +354,7 @@ addEventTitle.addEventListener("input", (e) => {
 function defineProperty() {
     var osccred = document.createElement("div");
     //   osccred.innerHTML =
-    //     "A Project By <a href='https://bibek10550.github.io/bibek/' target=_blank>Developed by Bibek</a>";
+    //     "A Project By <a href='https://bibekchandsah.github.io/bibek/' target=_blank>Developed by Bibek</a>";
     osccred.style.position = "absolute";
     osccred.style.bottom = "0";
     osccred.style.right = "0";
