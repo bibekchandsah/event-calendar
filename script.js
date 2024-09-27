@@ -61,7 +61,7 @@ const months = [
 
 const eventsArr = [];
 getEvents();
-console.log(eventsArr);
+// console.log(eventsArr);
 
 
 //function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
@@ -129,7 +129,7 @@ function initCalendar() {
     let events = JSON.parse(localStorage.getItem("events"));
     [...document.querySelectorAll(".day:not(.prev-date):not(.next-date)")].forEach(elem => {
         events && events.forEach(item => {
-            console.log(item.day, elem.textContent, item.month, monthh, item.year, yearr)
+            // console.log(item.day, elem.textContent, item.month, monthh, item.year, yearr)
             if (item.day == elem.textContent && item.month == months.indexOf(monthh) + 1 && item.year == yearr) {
                 elem.classList.add("event")
             }
@@ -275,7 +275,7 @@ dateInput.addEventListener("input", (e) => {
 // goto specific date
 gotoBtn.addEventListener("click", gotoDate);
 function gotoDate() {
-    console.log("here");
+    // console.log("here");
     const dateArr = dateInput.value.split("/");
     if (dateArr.length === 2) {
         if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
@@ -440,8 +440,8 @@ addEventSubmit.addEventListener("click", () => {
         title: eventTitle,
         time: timeFrom + " - " + timeTo,
     };
-    console.log(newEvent);
-    console.log(activeDay);
+    // console.log(newEvent);
+    // console.log(activeDay);
     let eventAdded = false;
     if (eventsArr.length > 0) {
         eventsArr.forEach((item) => {
@@ -463,7 +463,7 @@ addEventSubmit.addEventListener("click", () => {
             events: [newEvent],
         });
     }
-    console.log(eventsArr);
+    // console.log(eventsArr);
     addEventWrapper.classList.remove("active");
     addEventTitle.value = "";
     addEventFrom.value = "";
